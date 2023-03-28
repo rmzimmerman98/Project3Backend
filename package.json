@@ -2,7 +2,7 @@
   "name": "ollivandersbackendtest",
   "version": "1.0.0",
   "engines": {
-    "node": "18.13.0"
+    "node": "18.14.0"
   },
   "description": "",
   "main": "server.js",
