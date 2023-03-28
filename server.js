@@ -6,7 +6,7 @@ const mongoose = require ('mongoose');
 const app = express ();
 const cors = require('cors')
 const db = mongoose.connection;
-const Brewery = require('./models/brewery')
+const Breweries = require('./models/breweries')
 require('dotenv').config()
 //___________________
 //Port
@@ -45,28 +45,28 @@ app.get('/' , (req, res) => {
 });
 
 app.get('/breweries', (req, res) => {
-  Brewery.find({})
+  Breweries.find({})
   .then((foundBreweries) => {
     res.json(foundBreweries)
   })
 })
 
 app.post('/breweries', (req, res) => {
-  Brewery.create(req.body)
+  Breweries.create(req.body)
   .then((createdBrewery) => {
     res.json(createdBrewery)
   })
 })
 
 app.delete('/breweries/:id', (req, res) => {
-  Brewery.findByIdAndRemove(req.params.id)
+  Breweries.findByIdAndRemove(req.params.id)
   .then((deletedBrewery) => {
     res.json(deletedBrewery)
   })
 })
 
 app.put('/breweries/:id', (req, res) => {
-  Brewery.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  Breweries.findByIdAndUpdate(req.params.id, req.body, {new: true})
   .then((updatedBrewery) => {
     res.json(updatedBrewery)
   })
@@ -76,3 +76,4 @@ app.put('/breweries/:id', (req, res) => {
 //Listener
 //___________________
 app.listen(PORT, () => console.log( 'Listening on port:', PORT));
+
