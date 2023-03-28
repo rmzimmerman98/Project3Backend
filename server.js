@@ -4,7 +4,9 @@
 const express = require('express');
 const mongoose = require ('mongoose');
 const app = express ();
+const cors = require('cors')
 const db = mongoose.connection;
+const Brewery = require('./models/brewery')
 require('dotenv').config()
 //___________________
 //Port
@@ -32,13 +34,43 @@ app.use(express.static('public'));
 // populates req.body with parsed info from forms - if no data from forms will return an empty object {}
 app.use(express.urlencoded({ extended: false }));// extended: false - does not allow nested objects in query strings
 app.use(express.json());// returns middleware that only parses JSON - may or may not need it depending on your project
+
+app.use(cors())
 //___________________
 // Routes
 //___________________
 //localhost:3000
 app.get('/' , (req, res) => {
-  res.send('Hello World!');
+  res.redirect('/brewery')
 });
+
+app.get('/brewery', (req, res) => {
+  Brewery.find({})
+  .then((foundBreweries) => {
+    res.json(foundBreweries)
+  })
+})
+
+app.post('/brewery', (req, res) => {
+  Brewery.create(req.body)
+  .then((createdBrewery) => {
+    res.json(createdBrewery)
+  })
+})
+
+app.delete('/brewery/:id', (req, res) => {
+  Brewery.findByIdAndRemove(req.params.id)
+  .then((deletedBrewery) => {
+    res.json(deletedBrewery)
+  })
+})
+
+app.put('/brewery/:id', (req, res) => {
+  Brewery.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  .then((updatedBrewery) => {
+    res.json(updatedBrewery)
+  })
+})
 
 //___________________
 //Listener
