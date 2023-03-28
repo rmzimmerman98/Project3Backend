@@ -41,8 +41,36 @@ app.use(cors())
 //___________________
 //localhost:3000
 app.get('/' , (req, res) => {
-  res.send('Hello World!');
+  res.redirect('/brewery')
 });
+
+app.get('/brewery', (req, res) => {
+  Brewery.find({})
+  .then((foundBreweries) => {
+    res.json(foundBreweries)
+  })
+})
+
+app.post('/brewery', (req, res) => {
+  Brewery.create(req.body)
+  .then((createdBrewery) => {
+    res.json(createdBrewery)
+  })
+})
+
+app.delete('/brewery/:id', (req, res) => {
+  Brewery.findByIdAndRemove(req.params.id)
+  .then((deletedBrewery) => {
+    res.json(deletedBrewery)
+  })
+})
+
+app.put('/brewery/:id', (req, res) => {
+  Brewery.findByIdAndUpdate(req.params.id, req.body, {new: true})
+  .then((updatedBrewery) => {
+    res.json(updatedBrewery)
+  })
+})
 
 //___________________
 //Listener
