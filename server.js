@@ -41,31 +41,31 @@ app.use(cors())
 //___________________
 //localhost:3000
 app.get('/' , (req, res) => {
-  res.redirect('/brewery')
+  res.redirect('/breweries')
 });
 
-app.get('/brewery', (req, res) => {
+app.get('/breweries', (req, res) => {
   Brewery.find({})
   .then((foundBreweries) => {
     res.json(foundBreweries)
   })
 })
 
-app.post('/brewery', (req, res) => {
+app.post('/breweries', (req, res) => {
   Brewery.create(req.body)
   .then((createdBrewery) => {
     res.json(createdBrewery)
   })
 })
 
-app.delete('/brewery/:id', (req, res) => {
+app.delete('/breweries/:id', (req, res) => {
   Brewery.findByIdAndRemove(req.params.id)
   .then((deletedBrewery) => {
     res.json(deletedBrewery)
   })
 })
 
-app.put('/brewery/:id', (req, res) => {
+app.put('/breweries/:id', (req, res) => {
   Brewery.findByIdAndUpdate(req.params.id, req.body, {new: true})
   .then((updatedBrewery) => {
     res.json(updatedBrewery)
